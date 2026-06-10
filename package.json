@@ -2,9 +2,18 @@
   "name": "safe-nigeria-monorepo",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "apps/frontend"
-  ],
+  "packageManager": "yarn@1.22.22",
+  "workspaces": {
+    "packages": [
+      "apps/frontend"
+    ],
+    "nohoist": [
+      "**/react-map-gl",
+      "**/react-map-gl/**",
+      "**/mapbox-gl",
+      "**/mapbox-gl/**"
+    ]
+  },
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
