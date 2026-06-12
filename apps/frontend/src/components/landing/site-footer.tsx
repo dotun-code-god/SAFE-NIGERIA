@@ -4,7 +4,7 @@ import { Waves } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="mx-auto w-full max-w-none px-8 py-12">
+    <footer className="mx-auto w-full max-w-[90%] lg:max-w-[75%] py-12">
       <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <div>
           <div className="flex items-center gap-2">

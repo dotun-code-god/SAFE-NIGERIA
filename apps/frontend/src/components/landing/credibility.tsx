@@ -4,7 +4,7 @@ import { SectionLabel } from "./section-label";
 export function Credibility() {
   return (
     <section className="border-y border-border bg-card/30">
-      <div className="mx-auto grid w-full max-w-none items-center gap-12 px-8 py-24 md:grid-cols-[1.1fr_1fr]">
+      <div className="mx-auto grid w-full max-w-[90%] lg:max-w-[75%] items-center gap-12 py-24 md:grid-cols-[1.1fr_1fr]">
         <figure className="relative overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-elevated)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

@@ -36,7 +36,7 @@ export function HowItWorks() {
     },
   ];
   return (
-    <section id="how" className="mx-auto w-full max-w-none px-8 py-28">
+    <section id="how" className="mx-auto w-full max-w-[90%] lg:max-w-[75%] py-28">
       <SectionLabel>How It Works</SectionLabel>
       <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
         From a rising river to a routed response, in under five minutes.

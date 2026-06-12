@@ -5,7 +5,7 @@ import { Sun, Radio, Droplets, Cpu, Zap } from "lucide-react";
 export function SolutionSection() {
   return (
     <section id="solution" className="relative border-y border-border bg-card/30">
-      <div className="mx-auto grid w-full max-w-none items-center gap-16 px-8 py-28 md:grid-cols-2">
+      <div className="mx-auto grid w-full max-w-[90%] lg:max-w-[75%] items-center gap-16 py-28 md:grid-cols-2">
         <div>
           <SectionLabel>The Solution</SectionLabel>
           <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">

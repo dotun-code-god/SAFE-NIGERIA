@@ -9,7 +9,7 @@ export function PartnerCTA() {
         className="absolute inset-0 -z-10"
         style={{ background: "var(--gradient-hero)" }}
       />
-      <div className="mx-auto w-full max-w-none px-8 py-24 text-center">
+      <div className="mx-auto w-full max-w-[90%] lg:max-w-[75%] py-24 text-center">
         <h2 className="text-balance text-4xl font-semibold tracking-tight md:text-5xl">
           Partner with us to put a Sentinel on every river.
         </h2>
