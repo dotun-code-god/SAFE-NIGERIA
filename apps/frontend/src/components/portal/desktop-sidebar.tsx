@@ -126,12 +126,21 @@ function NodeChart({ node }: { node: TelemetryNode }) {
 }
 
 export default function DesktopSidebar({ nodes = [], selectedNodeId, onSelectNode }: DesktopSidebarProps) {
+  const [lastSelectedNode, setLastSelectedNode] = React.useState<TelemetryNode | null>(null);
+
   // Compute risk summary metrics dynamically
   const activeWarnings = (nodes || []).filter((n) => n.status === "critical" || n.status === "emergency").length;
   const watchAreas = (nodes || []).filter((n) => n.status === "watch" || n.status === "warning").length;
   const activeNodes = (nodes || []).filter((n) => n.batteryHealth > 0).length;
 
   const selectedNode = (nodes || []).find((n) => n.id === selectedNodeId) || null;
+
+  // Cache the last selected node to prevent crashes during exit animations
+  if (selectedNode && selectedNode !== lastSelectedNode) {
+    setLastSelectedNode(selectedNode);
+  }
+
+  const displayNode = selectedNode || lastSelectedNode;
 
   const getAlertBorderClass = (status: string) => {
     switch (status) {
@@ -286,86 +295,88 @@ export default function DesktopSidebar({ nodes = [], selectedNodeId, onSelectNod
             </motion.div>
           ) : (
             /* Component 2: Live Node Telemetry (Clicked Node View) */
-            <motion.div
-              key="node-telemetry"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="space-y-4 flex flex-col flex-1"
-            >
-              {/* Back Button */}
-              <button
-                onClick={() => onSelectNode(null)}
-                className="flex items-center space-x-2 text-xs font-mono text-white/60 hover:text-white transition-colors cursor-pointer w-fit select-none"
+            displayNode && (
+              <motion.div
+                key="node-telemetry"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4 flex flex-col flex-1"
               >
-                <ArrowLeft className="w-4 h-4" />
-                <span>BACK TO OVERVIEW</span>
-              </button>
+                {/* Back Button */}
+                <button
+                  onClick={() => onSelectNode(null)}
+                  className="flex items-center space-x-2 text-xs font-mono text-white/60 hover:text-white transition-colors cursor-pointer w-fit select-none"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>BACK TO OVERVIEW</span>
+                </button>
 
-              {/* Node Summary Card */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-lg p-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className="text-[8px] font-mono text-brand-accent tracking-widest uppercase">STATION {selectedNode.id}</span>
-                    <h2 className="text-sm font-bold text-white mt-0.5">{selectedNode.name}</h2>
-                    <p className="text-[10px] text-white/50 font-mono mt-0.5">{selectedNode.locationName}</p>
-                  </div>
-                  <span className={`text-[8px] font-mono font-semibold px-2 py-0.5 rounded border uppercase ${getAlertTextClass(selectedNode.status)}`}>
-                    {selectedNode.status}
-                  </span>
-                </div>
-
-                {/* Grid stats */}
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                  <div className="bg-white/[0.01] border border-white/5 rounded p-2.5">
-                    <span className="text-[8px] font-mono text-white/40 uppercase">Water Level</span>
-                    <div className="flex items-baseline space-x-1 mt-1">
-                      <span className="font-mono text-lg font-bold text-white">{selectedNode.waterLevel.toFixed(2)}</span>
-                      <span className="text-[10px] text-white/50">m</span>
-                    </div>
-                  </div>
-                  <div className="bg-white/[0.01] border border-white/5 rounded p-2.5">
-                    <span className="text-[8px] font-mono text-white/40 uppercase">Rise Rate</span>
-                    <div className="flex items-baseline space-x-1 mt-1">
-                      <span className={`font-mono text-lg font-bold ${selectedNode.waterRiseRate > 0 ? "text-alert-warning" : "text-alert-normal"}`}>
-                        {selectedNode.waterRiseRate > 0 ? `+${selectedNode.waterRiseRate.toFixed(2)}` : selectedNode.waterRiseRate.toFixed(2)}
-                      </span>
-                      <span className="text-[8px] text-white/50">m/h</span>
-                      {selectedNode.waterRiseRate > 0 ? (
-                        <TrendingUp className="w-3.5 h-3.5 text-alert-warning ml-1.5 self-center" />
-                      ) : (
-                        <TrendingDown className="w-3.5 h-3.5 text-alert-normal ml-1.5 self-center" />
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* SVG Area Chart render */}
-                <NodeChart node={selectedNode} />
-              </div>
-
-              {/* Hardware Device Health Card */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-lg p-4">
-                <h3 className="text-[9px] font-mono text-white/50 tracking-wider uppercase mb-3">HARDWARE DIAGNOSTICS</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-2.5">
-                    <Battery className={`w-4 h-4 ${selectedNode.batteryHealth > 30 ? "text-brand-accent" : "text-alert-warning"}`} />
+                {/* Node Summary Card */}
+                <div className="bg-white/[0.02] border border-white/5 rounded-lg p-4">
+                  <div className="flex justify-between items-start">
                     <div>
-                      <div className="text-[8px] text-white/40 font-mono uppercase leading-none">Battery</div>
-                      <div className="text-[11px] font-mono font-bold text-white mt-1">{selectedNode.batteryHealth}%</div>
+                      <span className="text-[8px] font-mono text-brand-accent tracking-widest uppercase">STATION {displayNode.id}</span>
+                      <h2 className="text-sm font-bold text-white mt-0.5">{displayNode.name}</h2>
+                      <p className="text-[10px] text-white/50 font-mono mt-0.5">{displayNode.locationName}</p>
+                    </div>
+                    <span className={`text-[8px] font-mono font-semibold px-2 py-0.5 rounded border uppercase ${getAlertTextClass(displayNode.status)}`}>
+                      {displayNode.status}
+                    </span>
+                  </div>
+
+                  {/* Grid stats */}
+                  <div className="grid grid-cols-2 gap-3 mt-4">
+                    <div className="bg-white/[0.01] border border-white/5 rounded p-2.5">
+                      <span className="text-[8px] font-mono text-white/40 uppercase">Water Level</span>
+                      <div className="flex items-baseline space-x-1 mt-1">
+                        <span className="font-mono text-lg font-bold text-white">{displayNode.waterLevel.toFixed(2)}</span>
+                        <span className="text-[10px] text-white/50">m</span>
+                      </div>
+                    </div>
+                    <div className="bg-white/[0.01] border border-white/5 rounded p-2.5">
+                      <span className="text-[8px] font-mono text-white/40 uppercase">Rise Rate</span>
+                      <div className="flex items-baseline space-x-1 mt-1">
+                        <span className={`font-mono text-lg font-bold ${displayNode.waterRiseRate > 0 ? "text-alert-warning" : "text-alert-normal"}`}>
+                          {displayNode.waterRiseRate > 0 ? `+${displayNode.waterRiseRate.toFixed(2)}` : displayNode.waterRiseRate.toFixed(2)}
+                        </span>
+                        <span className="text-[8px] text-white/50">m/h</span>
+                        {displayNode.waterRiseRate > 0 ? (
+                          <TrendingUp className="w-3.5 h-3.5 text-alert-warning ml-1.5 self-center" />
+                        ) : (
+                          <TrendingDown className="w-3.5 h-3.5 text-alert-normal ml-1.5 self-center" />
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2.5">
-                    <Radio className="w-4 h-4 text-brand-accent" />
-                    <div>
-                      <div className="text-[8px] text-white/40 font-mono uppercase leading-none">Signal</div>
-                      <div className="text-[11px] font-mono font-bold text-white mt-1">{selectedNode.signalStrength} dBm</div>
+
+                  {/* SVG Area Chart render */}
+                  <NodeChart node={displayNode} />
+                </div>
+
+                {/* Hardware Device Health Card */}
+                <div className="bg-white/[0.02] border border-white/5 rounded-lg p-4">
+                  <h3 className="text-[9px] font-mono text-white/50 tracking-wider uppercase mb-3">HARDWARE DIAGNOSTICS</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center space-x-2.5">
+                      <Battery className={`w-4 h-4 ${displayNode.batteryHealth > 30 ? "text-brand-accent" : "text-alert-warning"}`} />
+                      <div>
+                        <div className="text-[8px] text-white/40 font-mono uppercase leading-none">Battery</div>
+                        <div className="text-[11px] font-mono font-bold text-white mt-1">{displayNode.batteryHealth}%</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2.5">
+                      <Radio className="w-4 h-4 text-brand-accent" />
+                      <div>
+                        <div className="text-[8px] text-white/40 font-mono uppercase leading-none">Signal</div>
+                        <div className="text-[11px] font-mono font-bold text-white mt-1">{displayNode.signalStrength} dBm</div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            )
           )}
         </AnimatePresence>
       </div>
