@@ -141,7 +141,7 @@ export function ImpactSDG() {
         <img
           src="/assets/sdg-icons.png"
           alt="SDG 11 Sustainable Cities and SDG 13 Climate Action"
-          className="h-24 w-auto rounded-md bg-white p-2 md:h-28"
+          className="h-36 w-auto rounded-xl bg-white p-3 md:h-44"
         />
       </div>
     </section>
