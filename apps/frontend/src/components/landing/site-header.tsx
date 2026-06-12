@@ -5,10 +5,10 @@ export function SiteHeader() {
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 w-full max-w-none items-center justify-between px-8">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-md bg-[var(--gradient-signal)]">
-            <Waves className="h-4 w-4 text-primary-foreground" strokeWidth={2.5} />
-            <span className="absolute inset-0 animate-ping rounded-md bg-primary/30" />
+        <Link href="/" className="flex items-center gap-3">
+          <div className="relative grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-accent">
+            <Waves className="h-4 w-4" />
+            <span className="pulse-dot absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-accent" />
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-sm font-semibold tracking-tight">SAFE-NIGERIA</span>

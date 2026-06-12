@@ -1,6 +1,6 @@
 import React from "react";
 import { SectionLabel } from "./section-label";
-import { Sun, Radio, Droplets, Cpu, Zap } from "lucide-react";
+import { Sun, Radio, Droplets, Sparkles, Zap } from "lucide-react";
 
 export function SolutionSection() {
   return (
@@ -75,7 +75,7 @@ export function SolutionSection() {
               <NodeSpec icon={Sun} label="Solar input" value="18W" />
               <NodeSpec icon={Radio} label="LoRa range" value="10km+" />
               <NodeSpec icon={Droplets} label="Water level" value="±2cm" />
-              <NodeSpec icon={Cpu} label="Edge AI" value="Gemma 2B" />
+              <NodeSpec icon={Sparkles} label="Edge AI" value="Gemma 2B" />
             </div>
             <div className="mt-5 rounded-xl bg-card p-4">
               <div className="flex items-center justify-between text-xs text-muted-foreground">

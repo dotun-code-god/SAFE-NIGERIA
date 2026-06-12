@@ -1,6 +1,6 @@
 import React from "react";
 import { SectionLabel } from "./section-label";
-import { Gauge, Radio, Cpu, Satellite, Activity, Shield } from "lucide-react";
+import { Gauge, Radio, Sparkles, Satellite, Activity, Shield } from "lucide-react";
 
 export function HowItWorks() {
   const steps = [
@@ -15,7 +15,7 @@ export function HowItWorks() {
       body: "10km+ range. Bypasses mobile networks so the system stays online even when local cell towers fail.",
     },
     {
-      icon: Cpu,
+      icon: Sparkles,
       title: "Edge-Logic Processor",
       body: "Gemma-powered edge AI filters noise, detects anomalies, and triggers tiered alerts locally.",
     },

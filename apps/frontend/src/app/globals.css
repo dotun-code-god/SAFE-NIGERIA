@@ -148,6 +148,11 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* 80px offset to clear the fixed 64px site header */
+  }
+
   * {
     border-color: var(--color-border);
   }

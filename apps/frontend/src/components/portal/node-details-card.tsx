@@ -2,7 +2,7 @@
 
 import React from "react";
 import { TelemetryNode } from "@/hooks/use-telemetry-nodes";
-import { MapPin, Gauge, CloudRain, Battery, Signal, Zap } from "lucide-react";
+import { MapPin, Gauge, CloudRain, Battery, Signal, Sparkles } from "lucide-react";
 
 interface NodeDetailsCardProps {
   selected: TelemetryNode | null;
@@ -84,7 +84,7 @@ export default function NodeDetailsCard({ selected, mounted, sevColor, sevLabel 
 
         <div className="mt-5 rounded-md border border-dashed border-accent/30 bg-accent/5 p-3">
           <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-accent font-mono">
-            <Zap className="h-3 w-3 animate-pulse" /> Edge AI · Gemma
+            <Sparkles className="h-3 w-3 animate-pulse" /> Edge AI · Gemma
           </div>
           <p className="mt-1 text-xs leading-relaxed text-foreground/80">
             Anomaly score <span className="font-mono text-accent">{selected.waterLevel > 6.0 ? "0.73" : "0.18"}</span>. 
