@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 import { MapProvider } from "react-map-gl/mapbox";
 import { ArrowRight } from "lucide-react";
 import { SectionLabel } from "./section-label";
@@ -25,7 +26,12 @@ export function LivePreview() {
     <MapProvider>
       <section className="border-y border-border bg-card/30">
         <div className="mx-auto grid w-full max-w-[90%] lg:max-w-[75%] items-center gap-12 py-24 md:grid-cols-[1fr_1.2fr]">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
             <SectionLabel>Live Preview</SectionLabel>
             <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
               Watch Nigeria's rivers breathe.
@@ -41,15 +47,21 @@ export function LivePreview() {
               Open Portal
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </div>
+          </motion.div>
 
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border bg-[#0B0F19] shadow-[var(--shadow-elevated)] min-h-[350px] md:min-h-[450px]">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border bg-[#0B0F19] shadow-[var(--shadow-elevated)] min-h-[350px] md:min-h-[450px]"
+          >
             <FloodMap 
               nodes={nodes} 
               selectedNodeId={selectedNodeId} 
               onSelectNode={selectNode} 
             />
-          </div>
+          </motion.div>
         </div>
       </section>
     </MapProvider>

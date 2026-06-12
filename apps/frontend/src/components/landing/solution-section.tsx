@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 import { SectionLabel } from "./section-label";
 import { Sun, Radio, Droplets, Sparkles, Zap } from "lucide-react";
 
@@ -6,7 +9,12 @@ export function SolutionSection() {
   return (
     <section id="solution" className="relative border-y border-border bg-card/30">
       <div className="mx-auto grid w-full max-w-[90%] lg:max-w-[75%] items-center gap-16 py-28 md:grid-cols-2">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
           <SectionLabel>The Solution</SectionLabel>
           <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
             Ground-truth data from the river's edge.
@@ -33,10 +41,16 @@ export function SolutionSection() {
               </li>
             ))}
           </ul>
-        </div>
+        </motion.div>
 
         {/* Product visual */}
-        <div className="relative">
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative"
+        >
           <div className="relative overflow-hidden rounded-3xl border border-border bg-background/60 p-8 shadow-[var(--shadow-elevated)] backdrop-blur">
             <div className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-widest text-muted-foreground">
@@ -86,8 +100,7 @@ export function SolutionSection() {
             </div>
           </div>
           <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[2rem] bg-primary/10 blur-3xl" />
-        </div>
-
+        </motion.div>
       </div>
     </section>
   );

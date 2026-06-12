@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Area, AreaChart, CartesianGrid, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Sparkles } from "lucide-react";
 
 interface WaterTrendPoint {
   t: string;
@@ -82,7 +83,9 @@ export default function TelemetryCharts({
           })}
         </div>
         <div className="mt-5 rounded-md border border-border bg-background/40 p-3 text-xs">
-          <div className="font-mono text-[10px] uppercase tracking-widest text-accent">// AI situation report</div>
+          <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-accent">
+            <Sparkles className="h-3 w-3 animate-pulse" /> AI situation report
+          </div>
           <p className="mt-1 leading-relaxed text-foreground/80">
             Water levels across <span className="text-foreground font-semibold">{selectedState}</span> increased by 
             {(waterRiseRate * 6 * 100).toFixed(0)}% during the last six hours, creating risk markers in downstream monitored zones.

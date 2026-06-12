@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 import { SectionLabel } from "./section-label";
 import { HeartPulse, TrendingDown, Users, Building2, Leaf } from "lucide-react";
 
@@ -59,91 +62,112 @@ export function ImpactSDG() {
 
   return (
     <section id="impact" className="relative mx-auto w-full max-w-[90%] lg:max-w-[75%] py-28">
-      <SectionLabel>Impact</SectionLabel>
-      <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
-        Lives protected, losses avoided, a dataset where none existed.
-      </h2>
-      <p className="mt-5 max-w-2xl text-muted-foreground">
-        SAFE-NIGERIA is engineered for measurable outcomes — quantified against agency loss
-        reports and aligned with the SDGs Nigeria has already committed to.
-      </p>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <SectionLabel>Impact</SectionLabel>
+        <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
+          Lives protected, losses avoided, a dataset where none existed.
+        </h2>
+        <p className="mt-5 max-w-2xl text-muted-foreground">
+          SAFE-NIGERIA is engineered for measurable outcomes — quantified against agency loss
+          reports and aligned with the SDGs Nigeria has already committed to.
+        </p>
 
-      {/* Quantified metrics */}
-      <div className="mt-14 grid gap-5 md:grid-cols-3">
-        {metrics.map((m) => (
-          <div
-            key={m.label}
-            className="relative overflow-hidden rounded-2xl border border-border bg-card p-7"
-          >
-            <m.icon className="h-5 w-5 text-primary" />
-            <div className="mt-5 font-mono text-4xl font-semibold tracking-tight text-foreground">
-              {m.value}
-            </div>
-            <div className="mt-2 text-sm text-foreground/90">{m.label}</div>
-            <div className="mt-3 text-[11px] uppercase tracking-wider text-muted-foreground">
-              {m.sub}
-            </div>
-            <div className="pointer-events-none absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
-          </div>
-        ))}
-      </div>
-
-      {/* SDG alignment with real imagery */}
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
-        {sdgs.map((s) => (
-          <article
-            key={s.tag}
-            className={`group relative overflow-hidden rounded-3xl border border-border bg-card transition hover:ring-2 ${s.ring}`}
-          >
-            <div className="relative h-48 overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={s.photo}
-                alt=""
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-              />
-              <div
-                className={`absolute inset-0 bg-gradient-to-t ${s.tint} via-card/60 to-card`}
-              />
-              <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-foreground backdrop-blur">
-                <s.icon className="h-3 w-3 text-primary" />
-                {s.tag}
+        {/* Quantified metrics */}
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          {metrics.map((m, idx) => (
+            <motion.div
+              key={m.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
+              className="relative overflow-hidden rounded-2xl border border-border bg-card p-7"
+            >
+              <m.icon className="h-5 w-5 text-primary" />
+              <div className="mt-5 font-mono text-4xl font-semibold tracking-tight text-foreground">
+                {m.value}
               </div>
-            </div>
-
-            <div className="p-7">
-              <h3 className="text-xl font-semibold">{s.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
-
-              <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-5">
-                {s.kpis.map((k) => (
-                  <div key={k.k}>
-                    <dt className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                      {k.k}
-                    </dt>
-                    <dd className="mt-1 font-mono text-sm font-semibold text-foreground">
-                      {k.v}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {/* SDG visual reference */}
-      <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-border bg-card/40 p-6">
-        <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-          UN Sustainable Development Goals · Direct alignment
+              <div className="mt-2 text-sm text-foreground/90">{m.label}</div>
+              <div className="mt-3 text-[11px] uppercase tracking-wider text-muted-foreground">
+                {m.sub}
+              </div>
+              <div className="pointer-events-none absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
+            </motion.div>
+          ))}
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/assets/sdg-icons.png"
-          alt="SDG 11 Sustainable Cities and SDG 13 Climate Action"
-          className="h-36 w-auto rounded-xl bg-white p-3 md:h-44"
-        />
-      </div>
+
+        {/* SDG alignment with real imagery */}
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {sdgs.map((s, idx) => (
+            <motion.article
+              key={s.tag}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.75, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className={`group relative overflow-hidden rounded-3xl border border-border bg-card transition hover:ring-2 ${s.ring}`}
+            >
+              <div className="relative h-48 overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={s.photo}
+                  alt=""
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-t ${s.tint} via-card/60 to-card`}
+                />
+                <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-foreground backdrop-blur">
+                  <s.icon className="h-3 w-3 text-primary" />
+                  {s.tag}
+                </div>
+              </div>
+
+              <div className="p-7">
+                <h3 className="text-xl font-semibold">{s.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+
+                <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-5">
+                  {s.kpis.map((k) => (
+                    <div key={k.k}>
+                      <dt className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                        {k.k}
+                      </dt>
+                      <dd className="mt-1 font-mono text-sm font-semibold text-foreground">
+                        {k.v}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        {/* SDG visual reference */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-border bg-card/40 p-6"
+        >
+          <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+            UN Sustainable Development Goals · Direct alignment
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/assets/sdg-icons.png"
+            alt="SDG 11 Sustainable Cities and SDG 13 Climate Action"
+            className="h-36 w-auto rounded-xl bg-white p-3 md:h-44"
+          />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
